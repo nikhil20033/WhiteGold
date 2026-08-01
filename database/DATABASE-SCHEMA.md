@@ -83,3 +83,117 @@ Users (1)
 Customers (1)
    │
    └──────< Addresses (Many)
+
+
+
+
+## Categories
+
+Purpose:
+Stores product categories.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| Name | VARCHAR(100) | UQ | Category Name |
+| Description | VARCHAR(255) | | Description |
+| DisplayOrder | INT | | Display Order |
+| IsActive | BOOLEAN | | Active Status |
+| CreatedAt | DATETIME | | Created Date |
+| UpdatedAt | DATETIME | | Updated Date |
+| Id | Name   |
+| -- | ------ |
+| 1  | Milk   |
+| 2  | Curd   |
+| 3  | Butter |
+| 4  | Ghee   |
+| 5  | Paneer |
+
+
+| Id | Name   |
+| -- | ------ |
+| 1  | Milk   |
+| 2  | Curd   |
+| 3  | Butter |
+| 4  | Ghee   |
+| 5  | Paneer |
+
+
+## Products
+
+Purpose:
+Stores all sellable products.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| CategoryId | BIGINT | FK | Category Reference |
+| ProductCode | VARCHAR(30) | UQ | Product Code |
+| Name | VARCHAR(150) | | Product Name |
+| Description | TEXT | | Description |
+| Price | DECIMAL(10,2) | | Selling Price |
+| Unit | VARCHAR(20) | | Litre, Kg, Packet |
+| Weight | DECIMAL(10,2) | | Product Weight |
+| StockQuantity | INT | | Current Stock |
+| MinimumStock | INT | | Minimum Stock |
+| ImageUrl | VARCHAR(255) | | Default Image |
+| IsActive | BOOLEAN | | Active Status |
+| CreatedAt | DATETIME | | Created Date |
+| UpdatedAt | DATETIME | | Updated Date |
+
+## ProductImages
+
+Purpose:
+Stores multiple images for products.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| ProductId | BIGINT | FK | Product Reference |
+| ImageUrl | VARCHAR(255) | | Image URL |
+| IsPrimary | BOOLEAN | | Main Image |
+| DisplayOrder | INT | | Display Order |
+
+## Inventory
+
+Purpose:
+Tracks product inventory.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| ProductId | BIGINT | FK | Product |
+| AvailableQuantity | INT | | Available Stock |
+| ReservedQuantity | INT | | Reserved Stock |
+| DamagedQuantity | INT | | Damaged Stock |
+| LastUpdated | DATETIME | | Last Updated |
+
+
+Categories (1)
+      │
+      └──────< Products (Many)
+                    │
+          ┌─────────┴─────────┐
+          │                   │
+          ▼                   ▼
+ ProductImages          Inventory
+
+
+ | Module         | Status |
+| -------------- | ------ |
+| Roles          | ✅      |
+| Users          | ✅      |
+| Customers      | ✅      |
+| Addresses      | ✅      |
+| Categories     | ✅      |
+| Products       | ✅      |
+| Product Images | ✅      |
+| Inventory      | ✅      |
+
+
+
+
+
+
+
+   
