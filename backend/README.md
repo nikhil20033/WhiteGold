@@ -1,3 +1,3 @@
-# Frontend
+# Backend
 
-React + TypeScript + Vite
+ASP.NET Core Web API
