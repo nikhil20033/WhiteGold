@@ -169,6 +169,9 @@ Tracks product inventory.
 | LastUpdated | DATETIME | | Last Updated |
 
 
+
+
+
 Categories (1)
       │
       └──────< Products (Many)
@@ -177,6 +180,9 @@ Categories (1)
           │                   │
           ▼                   ▼
  ProductImages          Inventory
+
+
+
 
 
  | Module         | Status |
