@@ -6,70 +6,224 @@ Project Name: White Gold
 
 ---
 
-# Authentication
+# 1. Overview
 
-POST /api/auth/login
+The White Gold backend exposes REST APIs for customer applications, admin dashboard, delivery partner app, and Farm ERP.
 
-POST /api/auth/verify-otp
+Base URL
 
-POST /api/auth/logout
+https://api.whitegold.in/api/v1
 
----
+Authentication
 
-# Products
+JWT Bearer Token
 
-GET /api/products
+Content-Type
 
-GET /api/products/{id}
-
-GET /api/categories
+application/json
 
 ---
 
-# Customers
+# 2. Authentication APIs
 
-GET /api/customers/profile
+POST /auth/register
 
-PUT /api/customers/profile
+Create a new customer account.
 
-GET /api/customers/addresses
+POST /auth/login
 
-POST /api/customers/address
+Login using mobile/email and password.
 
----
+POST /auth/refresh-token
 
-# Orders
+Generate a new access token.
 
-POST /api/orders
+POST /auth/logout
 
-GET /api/orders
-
-GET /api/orders/{id}
+Logout current user.
 
 ---
 
-# Subscriptions
+# 3. Customer APIs
 
-GET /api/subscriptions
+GET /customers/profile
 
-POST /api/subscriptions
+Update customer profile.
 
-PUT /api/subscriptions/{id}
+PUT /customers/profile
 
-DELETE /api/subscriptions/{id}
+Update customer information.
+
+GET /customers/address
+
+Get saved addresses.
+
+POST /customers/address
+
+Add new address.
+
+DELETE /customers/address/{id}
+
+Delete address.
 
 ---
 
-# Payments
+# 4. Product APIs
 
-POST /api/payments
+GET /products
 
-GET /api/payments/history
+Get all products.
+
+GET /products/{id}
+
+Get product details.
+
+GET /products/category/{id}
+
+Products by category.
+
+GET /products/search
+
+Search products.
 
 ---
 
-# Notifications
+# 5. Cart APIs
 
-GET /api/notifications
+GET /cart
 
-PUT /api/notifications/read
+View cart.
+
+POST /cart
+
+Add product to cart.
+
+PUT /cart/{id}
+
+Update cart quantity.
+
+DELETE /cart/{id}
+
+Remove product.
+
+---
+
+# 6. Order APIs
+
+POST /orders
+
+Create order.
+
+GET /orders
+
+Order history.
+
+GET /orders/{id}
+
+Order details.
+
+PUT /orders/cancel/{id}
+
+Cancel order.
+
+---
+
+# 7. Subscription APIs
+
+POST /subscriptions
+
+Create subscription.
+
+GET /subscriptions
+
+View subscriptions.
+
+PUT /subscriptions/{id}
+
+Update subscription.
+
+DELETE /subscriptions/{id}
+
+Cancel subscription.
+
+---
+
+# 8. Payment APIs
+
+POST /payments/create
+
+Create payment.
+
+POST /payments/verify
+
+Verify payment.
+
+GET /payments/history
+
+Payment history.
+
+---
+
+# 9. Delivery APIs
+
+GET /delivery/orders
+
+Assigned deliveries.
+
+PUT /delivery/status
+
+Update delivery status.
+
+GET /delivery/history
+
+Delivery history.
+
+---
+
+# 10. Admin APIs
+
+GET /admin/dashboard
+
+Dashboard statistics.
+
+GET /admin/customers
+
+Customer list.
+
+GET /admin/orders
+
+Order list.
+
+GET /admin/products
+
+Manage products.
+
+GET /admin/payments
+
+Payment reports.
+
+GET /admin/delivery
+
+Delivery reports.
+
+---
+
+# 11. Future APIs
+
+Wishlist
+
+Notifications
+
+Coupons
+
+Referral
+
+Loyalty Points
+
+Inventory
+
+Reports
+
+Analytics
+
+AI Recommendation Engine
