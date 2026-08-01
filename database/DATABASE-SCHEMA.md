@@ -198,6 +198,154 @@ Categories (1)
 
 
 
+## Cart
+
+Purpose:
+Stores active shopping cart for each customer.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| CustomerId | BIGINT | FK | Customer Reference |
+| TotalItems | INT | | Total Products |
+| TotalAmount | DECIMAL(10,2) | | Cart Total |
+| CreatedAt | DATETIME | | Created Date |
+| UpdatedAt | DATETIME | | Updated Date |
+
+
+
+## CartItems
+
+Purpose:
+Stores products added to cart.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| CartId | BIGINT | FK | Cart Reference |
+| ProductId | BIGINT | FK | Product Reference |
+| Quantity | DECIMAL(10,2) | | Quantity |
+| UnitPrice | DECIMAL(10,2) | | Product Price |
+| TotalPrice | DECIMAL(10,2) | | Total Price |
+| CreatedAt | DATETIME | | Created Date |
+
+
+## Orders
+
+Purpose:
+Stores customer orders.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| OrderNumber | VARCHAR(30) | UQ | Unique Order Number |
+| CustomerId | BIGINT | FK | Customer |
+| AddressId | BIGINT | FK | Delivery Address |
+| OrderDate | DATETIME | | Order Date |
+| DeliveryDate | DATE | | Delivery Date |
+| OrderStatus | VARCHAR(30) | | Pending, Delivered, Cancelled |
+| PaymentStatus | VARCHAR(30) | | Paid, Pending, Failed |
+| SubTotal | DECIMAL(10,2) | | Product Total |
+| DeliveryCharge | DECIMAL(10,2) | | Delivery Fee |
+| Discount | DECIMAL(10,2) | | Discount |
+| Tax | DECIMAL(10,2) | | GST |
+| TotalAmount | DECIMAL(10,2) | | Final Amount |
+| CreatedAt | DATETIME | | Created Date |
+
+## OrderItems
+
+Purpose:
+Stores products inside an order.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| OrderId | BIGINT | FK | Order |
+| ProductId | BIGINT | FK | Product |
+| Quantity | DECIMAL(10,2) | | Quantity |
+| UnitPrice | DECIMAL(10,2) | | Selling Price |
+| TotalPrice | DECIMAL(10,2) | | Total Price |
+
+
+
+## Payments
+
+Purpose:
+Stores payment transactions.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| OrderId | BIGINT | FK | Order |
+| TransactionId | VARCHAR(100) | UQ | Gateway Transaction |
+| PaymentMethod | VARCHAR(50) | | UPI, Card, COD |
+| Amount | DECIMAL(10,2) | | Amount |
+| PaymentStatus | VARCHAR(30) | | Success, Failed, Pending |
+| PaidAt | DATETIME | | Payment Time |
+
+
+## Coupons
+
+Purpose:
+Stores discount coupons.
+
+| Column | Type | Key | Description |
+|---------|------|-----|-------------|
+| Id | BIGINT | PK | Primary Key |
+| CouponCode | VARCHAR(30) | UQ | Coupon Code |
+| DiscountType | VARCHAR(20) | | Flat / Percentage |
+| DiscountValue | DECIMAL(10,2) | | Discount |
+| MinimumOrder | DECIMAL(10,2) | | Minimum Amount |
+| ExpiryDate | DATE | | Expiry Date |
+| IsActive | BOOLEAN | | Active |
+
+
+Customers
+    │
+    ├──────── Cart
+    │            │
+    │            └──────< CartItems >────── Products
+    │
+    └──────── Orders
+                 │
+        ┌────────┼────────┐
+        │        │        │
+        ▼        ▼        ▼
+  OrderItems  Payments  Coupons
+        │
+        ▼
+    Products
+
+
+
+
+| Module              | Status |
+| ------------------- | ------ |
+| User Management     | ✅      |
+| Customer Management | ✅      |
+| Product Management  | ✅      |
+| Cart Management     | ✅      |
+| Order Management    | ✅      |
+| Payment Management  | ✅      |
+| Coupon Management   | ✅      |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
