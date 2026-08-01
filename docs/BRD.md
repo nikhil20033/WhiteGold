@@ -3,7 +3,7 @@
 Version: 1.0
 
 Project Name: White Gold
-
+ 
 ---
 
 # 1. Business Overview
