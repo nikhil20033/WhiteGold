@@ -1,13 +1,19 @@
-# Database
+# White Gold Database Schema
 
-This folder contains all database-related resources for the White Gold project.
+Version: 1.0
 
-Contents:
+## Overview
 
-- Database Schema
-- ER Diagram
-- SQL Scripts
-- Seed Data
-- Migration Notes
+This document defines the database schema for the White Gold Dairy Management Platform.
 
-Database: MySQL
+The schema includes:
+
+- User Management
+- Customer Management
+- Product Management
+- Subscription Management
+- Order Management
+- Payment Management
+- Delivery Management
+
+Detailed table definitions will be added in the next phase.
