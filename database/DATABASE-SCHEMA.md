@@ -1,53 +1,51 @@
 # White Gold Database Schema
 
-Version: 1.0
+## Database Relationships
+
+```text
+Roles
+   │
+   └──── Users
+            │
+            └──── Customers
+                       │
+                       └──── Addresses
+```
+
+## Tables
+
+### Roles
+
+| Column | Type |
+|---------|------|
+| Id | BIGINT |
+| Name | VARCHAR(50) |
 
 ---
 
-# Database Information
+### Users
 
-Database Engine: MySQL
-
-Character Set: utf8mb4
-
-Collation: utf8mb4_unicode_ci
-
-Naming Convention:
-
-- Tables: PascalCase
-- Columns: PascalCase
-- Primary Key: Id
-- Foreign Key: EntityNameId
+| Column | Type |
+|---------|------|
+| Id | BIGINT |
+| RoleId | BIGINT |
+| FullName | VARCHAR(150) |
+| Email | VARCHAR(150) |
 
 ---
 
-# Audit Columns
+### Customers
 
-Every table will contain:
-
-- CreatedAt
-- UpdatedAt
-- CreatedBy
-- UpdatedBy
-- IsDeleted
-- IsActive
+| Column | Type |
+|---------|------|
+| Id | BIGINT |
+| UserId | BIGINT |
 
 ---
 
-# Common Data Types
+### Addresses
 
-BIGINT
-
-INT
-
-VARCHAR
-
-TEXT
-
-DECIMAL
-
-DATE
-
-DATETIME
-
-BOOLEAN
+| Column | Type |
+|---------|------|
+| Id | BIGINT |
+| CustomerId | BIGINT |
