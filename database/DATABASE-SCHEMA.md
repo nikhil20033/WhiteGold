@@ -66,6 +66,12 @@ Stores customer addresses.
 | Latitude | DECIMAL(10,7) | | Latitude |
 | Longitude | DECIMAL(10,7) | | Longitude |
 | IsDefault | BOOLEAN | | Default Address |
+
+
+
+
+
+
 Roles (1)
    │
    └──────< Users (Many)
