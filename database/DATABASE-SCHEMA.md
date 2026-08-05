@@ -1,353 +1,214 @@
-## Roles
+# White Gold Database Schema
 
-Purpose:
+Version: 1.0
+
+---
+
+# Database Information
+
+Project Name: White Gold
+
+Database Engine: MySQL
+
+Character Set: utf8mb4
+
+Collation: utf8mb4_unicode_ci
+
+Storage Engine: InnoDB
+
+Timezone: UTC
+
+---
+
+# Database Naming Convention
+
+## Tables
+
+PascalCase
+
+Example:
+
+Users
+
+Products
+
+Orders
+
+---
+
+## Columns
+
+PascalCase
+
+Example:
+
+FullName
+
+ProductName
+
+CreatedAt
+
+---
+
+## Primary Key
+
+Id
+
+---
+
+## Foreign Key
+
+<EntityName>Id
+
+Example:
+
+CustomerId
+
+RoleId
+
+ProductId
+
+OrderId
+
+---
+
+## Audit Columns
+
+Every table should contain:
+
+CreatedAt
+
+UpdatedAt
+
+CreatedBy
+
+UpdatedBy
+
+IsActive
+
+IsDeleted
+
+---
+
+# Common Data Types
+
+| Type | Usage |
+|------|------|
+| BIGINT | Primary Keys |
+| INT | Numbers |
+| VARCHAR | Text |
+| TEXT | Large Text |
+| BOOLEAN | True / False |
+| DECIMAL(10,2) | Price |
+| DATE | Date |
+| DATETIME | Date Time |
+
+---
+
+# Module 1 - Roles
+
+## Purpose
+
 Stores all application roles.
 
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| Name | VARCHAR(50) | | Role Name |
-| Description | VARCHAR(255) | | Role Description |
-| IsActive | BOOLEAN | | Active Status |
-| CreatedAt | DATETIME | | Created Date |
-| UpdatedAt | DATETIME | | Updated Date |
-| Id | Name             |
-| -- | ---------------- |
-| 1  | Admin            |
-| 2  | Customer         |
-| 3  | Delivery Partner |
-| 4  | Farm Manager     |
-## Users
+### Columns
 
-Purpose:
-Stores login information for every application user.
+| Column | Type | Key | Nullable | Description |
+|---------|------|-----|----------|-------------|
+| Id | BIGINT | PK | No | Primary Key |
+| Name | VARCHAR(50) | UQ | No | Role Name |
+| Description | VARCHAR(255) | | Yes | Role Description |
+| IsActive | BOOLEAN | | No | Active Status |
+| CreatedAt | DATETIME | | No | Created Date |
+| UpdatedAt | DATETIME | | Yes | Updated Date |
 
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| RoleId | BIGINT | FK | Role Reference |
-| FullName | VARCHAR(150) | | Full Name |
-| Email | VARCHAR(150) | UQ | Email Address |
-| Phone | VARCHAR(15) | UQ | Mobile Number |
-| PasswordHash | VARCHAR(500) | | Encrypted Password |
-| LastLogin | DATETIME | | Last Login |
-| IsActive | BOOLEAN | | Active Status |
-| CreatedAt | DATETIME | | Created Date |
-| UpdatedAt | DATETIME | | Updated Date |
-## Customers
+### Sample Roles
 
-Purpose:
-Stores customer profile details.
+Admin
 
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| UserId | BIGINT | FK | User Reference |
-| CustomerCode | VARCHAR(20) | UQ | Customer Code |
-| Gender | VARCHAR(20) | | Gender |
-| DateOfBirth | DATE | | Date Of Birth |
-| LoyaltyPoints | INT | | Reward Points |
-| IsActive | BOOLEAN | | Status |
-## Addresses
+Customer
 
-Purpose:
+Delivery Partner
+
+Farm Manager
+
+---
+
+# Module 2 - Users
+
+## Purpose
+
+Stores application login users.
+
+### Columns
+
+| Column | Type | Key | Nullable | Description |
+|---------|------|-----|----------|-------------|
+| Id | BIGINT | PK | No | Primary Key |
+| RoleId | BIGINT | FK | No | Role |
+| FullName | VARCHAR(150) | | No | Full Name |
+| Email | VARCHAR(150) | UQ | No | Email |
+| Phone | VARCHAR(20) | UQ | No | Mobile Number |
+| PasswordHash | VARCHAR(500) | | No | Encrypted Password |
+| LastLogin | DATETIME | | Yes | Last Login |
+| IsActive | BOOLEAN | | No | Active Status |
+| CreatedAt | DATETIME | | No | Created Date |
+| UpdatedAt | DATETIME | | Yes | Updated Date |
+
+Relationship
+
+Roles (1) ------< Users (Many)
+
+---
+
+# Module 3 - Customers
+
+## Purpose
+
+Stores customer profile information.
+
+### Columns
+
+| Column | Type | Key | Nullable | Description |
+|---------|------|-----|----------|-------------|
+| Id | BIGINT | PK | No | Primary Key |
+| UserId | BIGINT | FK | No | User Reference |
+| CustomerCode | VARCHAR(20) | UQ | No | Customer Code |
+| Gender | VARCHAR(20) | | Yes | Gender |
+| DateOfBirth | DATE | | Yes | DOB |
+| LoyaltyPoints | INT | | No | Reward Points |
+| IsActive | BOOLEAN | | No | Active |
+
+Relationship
+
+Users (1) ------ Customers (1)
+
+---
+
+# Module 4 - Addresses
+
+## Purpose
+
 Stores customer addresses.
 
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| CustomerId | BIGINT | FK | Customer |
-| AddressLine1 | VARCHAR(255) | | Address |
-| AddressLine2 | VARCHAR(255) | | Address |
-| City | VARCHAR(100) | | City |
-| State | VARCHAR(100) | | State |
-| Country | VARCHAR(100) | | Country |
-| Pincode | VARCHAR(10) | | Zip Code |
-| Latitude | DECIMAL(10,7) | | Latitude |
-| Longitude | DECIMAL(10,7) | | Longitude |
-| IsDefault | BOOLEAN | | Default Address |
-
-
-
-
-
-
-Roles (1)
-   │
-   └──────< Users (Many)
-
-Users (1)
-   │
-   └────── Customers (1)
-
-Customers (1)
-   │
-   └──────< Addresses (Many)
-
-
-
-
-## Categories
-
-Purpose:
-Stores product categories.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| Name | VARCHAR(100) | UQ | Category Name |
-| Description | VARCHAR(255) | | Description |
-| DisplayOrder | INT | | Display Order |
-| IsActive | BOOLEAN | | Active Status |
-| CreatedAt | DATETIME | | Created Date |
-| UpdatedAt | DATETIME | | Updated Date |
-| Id | Name   |
-| -- | ------ |
-| 1  | Milk   |
-| 2  | Curd   |
-| 3  | Butter |
-| 4  | Ghee   |
-| 5  | Paneer |
-
-
-| Id | Name   |
-| -- | ------ |
-| 1  | Milk   |
-| 2  | Curd   |
-| 3  | Butter |
-| 4  | Ghee   |
-| 5  | Paneer |
-
-
-## Products
-
-Purpose:
-Stores all sellable products.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| CategoryId | BIGINT | FK | Category Reference |
-| ProductCode | VARCHAR(30) | UQ | Product Code |
-| Name | VARCHAR(150) | | Product Name |
-| Description | TEXT | | Description |
-| Price | DECIMAL(10,2) | | Selling Price |
-| Unit | VARCHAR(20) | | Litre, Kg, Packet |
-| Weight | DECIMAL(10,2) | | Product Weight |
-| StockQuantity | INT | | Current Stock |
-| MinimumStock | INT | | Minimum Stock |
-| ImageUrl | VARCHAR(255) | | Default Image |
-| IsActive | BOOLEAN | | Active Status |
-| CreatedAt | DATETIME | | Created Date |
-| UpdatedAt | DATETIME | | Updated Date |
-
-## ProductImages
-
-Purpose:
-Stores multiple images for products.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| ProductId | BIGINT | FK | Product Reference |
-| ImageUrl | VARCHAR(255) | | Image URL |
-| IsPrimary | BOOLEAN | | Main Image |
-| DisplayOrder | INT | | Display Order |
-
-## Inventory
-
-Purpose:
-Tracks product inventory.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| ProductId | BIGINT | FK | Product |
-| AvailableQuantity | INT | | Available Stock |
-| ReservedQuantity | INT | | Reserved Stock |
-| DamagedQuantity | INT | | Damaged Stock |
-| LastUpdated | DATETIME | | Last Updated |
-
-
-
-
-
-Categories (1)
-      │
-      └──────< Products (Many)
-                    │
-          ┌─────────┴─────────┐
-          │                   │
-          ▼                   ▼
- ProductImages          Inventory
-
-
-
-
-
- | Module         | Status |
-| -------------- | ------ |
-| Roles          | ✅      |
-| Users          | ✅      |
-| Customers      | ✅      |
-| Addresses      | ✅      |
-| Categories     | ✅      |
-| Products       | ✅      |
-| Product Images | ✅      |
-| Inventory      | ✅      |
-
-
-
-## Cart
-
-Purpose:
-Stores active shopping cart for each customer.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| CustomerId | BIGINT | FK | Customer Reference |
-| TotalItems | INT | | Total Products |
-| TotalAmount | DECIMAL(10,2) | | Cart Total |
-| CreatedAt | DATETIME | | Created Date |
-| UpdatedAt | DATETIME | | Updated Date |
-
-
-
-## CartItems
-
-Purpose:
-Stores products added to cart.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| CartId | BIGINT | FK | Cart Reference |
-| ProductId | BIGINT | FK | Product Reference |
-| Quantity | DECIMAL(10,2) | | Quantity |
-| UnitPrice | DECIMAL(10,2) | | Product Price |
-| TotalPrice | DECIMAL(10,2) | | Total Price |
-| CreatedAt | DATETIME | | Created Date |
-
-
-## Orders
-
-Purpose:
-Stores customer orders.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| OrderNumber | VARCHAR(30) | UQ | Unique Order Number |
-| CustomerId | BIGINT | FK | Customer |
-| AddressId | BIGINT | FK | Delivery Address |
-| OrderDate | DATETIME | | Order Date |
-| DeliveryDate | DATE | | Delivery Date |
-| OrderStatus | VARCHAR(30) | | Pending, Delivered, Cancelled |
-| PaymentStatus | VARCHAR(30) | | Paid, Pending, Failed |
-| SubTotal | DECIMAL(10,2) | | Product Total |
-| DeliveryCharge | DECIMAL(10,2) | | Delivery Fee |
-| Discount | DECIMAL(10,2) | | Discount |
-| Tax | DECIMAL(10,2) | | GST |
-| TotalAmount | DECIMAL(10,2) | | Final Amount |
-| CreatedAt | DATETIME | | Created Date |
-
-## OrderItems
-
-Purpose:
-Stores products inside an order.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| OrderId | BIGINT | FK | Order |
-| ProductId | BIGINT | FK | Product |
-| Quantity | DECIMAL(10,2) | | Quantity |
-| UnitPrice | DECIMAL(10,2) | | Selling Price |
-| TotalPrice | DECIMAL(10,2) | | Total Price |
-
-
-
-## Payments
-
-Purpose:
-Stores payment transactions.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| OrderId | BIGINT | FK | Order |
-| TransactionId | VARCHAR(100) | UQ | Gateway Transaction |
-| PaymentMethod | VARCHAR(50) | | UPI, Card, COD |
-| Amount | DECIMAL(10,2) | | Amount |
-| PaymentStatus | VARCHAR(30) | | Success, Failed, Pending |
-| PaidAt | DATETIME | | Payment Time |
-
-
-## Coupons
-
-Purpose:
-Stores discount coupons.
-
-| Column | Type | Key | Description |
-|---------|------|-----|-------------|
-| Id | BIGINT | PK | Primary Key |
-| CouponCode | VARCHAR(30) | UQ | Coupon Code |
-| DiscountType | VARCHAR(20) | | Flat / Percentage |
-| DiscountValue | DECIMAL(10,2) | | Discount |
-| MinimumOrder | DECIMAL(10,2) | | Minimum Amount |
-| ExpiryDate | DATE | | Expiry Date |
-| IsActive | BOOLEAN | | Active |
-
-
-Customers
-    │
-    ├──────── Cart
-    │            │
-    │            └──────< CartItems >────── Products
-    │
-    └──────── Orders
-                 │
-        ┌────────┼────────┐
-        │        │        │
-        ▼        ▼        ▼
-  OrderItems  Payments  Coupons
-        │
-        ▼
-    Products
-
-
-
-
-| Module              | Status |
-| ------------------- | ------ |
-| User Management     | ✅      |
-| Customer Management | ✅      |
-| Product Management  | ✅      |
-| Cart Management     | ✅      |
-| Order Management    | ✅      |
-| Payment Management  | ✅      |
-| Coupon Management   | ✅      |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
+### Columns
+
+| Column | Type | Key | Nullable | Description |
+|---------|------|-----|----------|-------------|
+| Id | BIGINT | PK | No | Primary Key |
+| CustomerId | BIGINT | FK | No | Customer |
+| AddressLine1 | VARCHAR(255) | | No | Address |
+| AddressLine2 | VARCHAR(255) | | Yes | Address |
+| City | VARCHAR(100) | | No | City |
+| State | VARCHAR(100) | | No | State |
+| Country | VARCHAR(100) | | No | Country |
+| Pincode | VARCHAR(10) | | No | Postal Code |
+| Latitude | DECIMAL(10,7) | | Yes | Latitude |
+| Longitude | DECIMAL(10,7) | | Yes | Longitude |
+| IsDefault | BOOLEAN | | No | Default Address |
+
+Relationship
+
+Customers (1) ------< Addresses (Many)
+
+---
