@@ -1,3 +1,13 @@
-# Backend
-
-ASP.NET Core Web API
+backend
+│
+├── src
+│   ├── WhiteGold.API
+│   ├── WhiteGold.Application
+│   ├── WhiteGold.Domain
+│   ├── WhiteGold.Infrastructure
+│
+├── tests
+│   ├── WhiteGold.UnitTests
+│   ├── WhiteGold.IntegrationTests
+│
+└── docs
